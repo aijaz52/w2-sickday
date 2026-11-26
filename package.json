@@ -1,0 +1,11 @@
+{
+  "name": "w2-sickday",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "start": "node main.ts",
+    "build": "node --check main.ts"
+  }
+}

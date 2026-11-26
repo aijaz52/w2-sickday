@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the entry
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check the entrypoint
+        run: node --check main.ts
+      - name: Verify entry length and printed output
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { readFileSync } from 'node:fs';
+
+          const source = readFileSync('text.txt', 'utf8');
+          const entry = source.trimEnd();
+          assert.ok(entry.length > 0, 'The entry must not be empty.');
+          assert.ok([...entry].length <= 200, 'The entry must be at most 200 characters.');
+          assert.ok(!/[\r\n]/.test(entry), 'The entry must fit on one line.');
+          assert.equal(source, `${entry}\n`, 'The file must contain only the entry and its final newline.');
+          assert.equal(execFileSync(process.execPath, ['main.ts'], { encoding: 'utf8' }), source);
+          assert.ok(readFileSync('README.md', 'utf8').includes(entry), 'The README must include the entry.');
+          console.log(`Build passing: ${[...entry].length}/200 characters.`);
+          NODE
