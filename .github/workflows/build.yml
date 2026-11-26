@@ -13,28 +13,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the entry
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - name: Check the entrypoint
-        run: node --check main.ts
-      - name: Verify entry length and printed output
+          node-version: "22"
+      - name: Check entry syntax
+        run: npm run build
+      - name: Check the excuse and its output
         run: |
           node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict';
-          import { execFileSync } from 'node:child_process';
-          import { readFileSync } from 'node:fs';
+          import assert from "node:assert/strict";
+          import { execFileSync } from "node:child_process";
+          import { readFileSync } from "node:fs";
 
-          const source = readFileSync('text.txt', 'utf8');
-          const entry = source.trimEnd();
-          assert.ok(entry.length > 0, 'The entry must not be empty.');
-          assert.ok([...entry].length <= 200, 'The entry must be at most 200 characters.');
-          assert.ok(!/[\r\n]/.test(entry), 'The entry must fit on one line.');
-          assert.equal(source, `${entry}\n`, 'The file must contain only the entry and its final newline.');
-          assert.equal(execFileSync(process.execPath, ['main.ts'], { encoding: 'utf8' }), source);
-          assert.ok(readFileSync('README.md', 'utf8').includes(entry), 'The README must include the entry.');
-          console.log(`Build passing: ${[...entry].length}/200 characters.`);
+          const text = readFileSync("text.txt", "utf8");
+          assert.match(text, /^[^\r\n]+\n$/, "Expected exactly one line and a final newline.");
+          const excuse = text.slice(0, -1);
+          const length = Array.from(excuse).length;
+          assert.ok(length <= 200, "The excuse exceeds 200 characters.");
+          const output = execFileSync(process.execPath, ["main.ts"], { encoding: "utf8" });
+          assert.equal(output, text, "The entrypoint must print text.txt exactly.");
+          const readme = readFileSync("README.md", "utf8");
+          assert.ok(readme.includes(excuse), "The README must contain the excuse.");
+          assert.equal((readme.match(/!\[/g) ?? []).length, 3, "Expected three badges.");
+          console.log(`Entry checks passed: ${length}/200 characters.`);
           NODE

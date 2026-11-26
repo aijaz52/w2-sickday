@@ -1,13 +1,15 @@
-# Doctor's Orders: No Circling Back
+# My Last Nerve Called in Sick
 
-[![Build](https://github.com/aijaz52/w2-sickday/actions/workflows/build.yml/badge.svg)](https://github.com/aijaz52/w2-sickday/actions/workflows/build.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Reward](https://make.fun/c/u-zeroxfive-the-funniest-sick-day-excuse-37423a36/reward.svg)](https://make.fun/bounty/u-zeroxfive-the-funniest-sick-day-excuse-37423a36)
+[![Build passing](https://github.com/aijaz52/w2-sickday/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/aijaz52/w2-sickday/actions/workflows/build.yml)
+[![MIT license](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![make.fun reward](https://make.fun/c/u-zeroxfive-the-funniest-sick-day-excuse-37423a36/reward.svg)](https://make.fun/bounty/u-zeroxfive-the-funniest-sick-day-excuse-37423a36)
 
-I pulled a muscle pretending to be excited about Monday. Doctor says I need 48 hours without circling back.
+I sprained my last nerve replying 'no worries.' Doctor says one more 'quick call' and it'll need surgery.
 
-Run with Node.js 22.18 or later:
+Print the excuse with Node.js 22.18 or newer:
 
 ```sh
 node main.ts
 ```
+
+An MIT-licensed entry for the make.fun sick day excuse bounty.
